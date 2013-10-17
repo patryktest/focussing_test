@@ -21,7 +21,8 @@
     <head>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Hello World</title>
     </head>
@@ -32,10 +33,11 @@
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
-            <input type="text" value="name"/>
-            <input type="text" value="date"/>
-            <input type="password" value="type"/>
-            <button>next</button>
+            <input id="name" type="text" value="name"/>
+            <input id="date" type="text" value="date"/>
+            <input id="pass" type="password" value="type"/>
+            <button onclick="save();">next</button>
+            
             
         </div>
         <script type="text/javascript" src="cordova.js"></script>
@@ -47,10 +49,10 @@
     // Populate the database 
     //
     function populateDB(tx) {
-        tx.executeSql('DROP TABLE IF EXISTS DEMO');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
-        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
-        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
+        //tx.executeSql('DROP TABLE IF EXISTS DEMO');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS USER (name, pass)');
+        //tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
+        //tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
     }
 
     // Query the database
@@ -58,6 +60,7 @@
     function queryDB(tx) {
         tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
     }
+    
 
     // Query the success callback
     //
@@ -85,11 +88,23 @@
         db.transaction(queryDB, errorCB);
     }
 
+    function save(){
+        var name = document.getElementById('name');
+        var pass = document.getElementById('pass');
+        var name_text = name.value;
+        var pass_text = pass.value;
+        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+        db.transaction(function saveDB(tx,name,pass){
+            tx.executeSql('INSERT INTO USER (name, pass) VALUES ('+name+', '+pass+')');
+            }, errorCB);
+        console.log(name_text,pass_text);
+        
+    }
     // Cordova is ready
     //
     function onDeviceReady() {
         var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
-        db.transaction(populateDB, errorCB, successCB);
+        db.transaction(populateDB, errorCB);
     }
 
 
