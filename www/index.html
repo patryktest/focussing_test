@@ -51,6 +51,7 @@
     function populateDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS DEMO');
         tx.executeSql('CREATE TABLE IF NOT EXISTS USER (name, pass)');
+        tx.executeSql('SELECT * FROM USER', [], querySuccess);
         //tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
         //tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
     }
@@ -65,11 +66,14 @@
     // Query the success callback
     //
     function querySuccess(tx, results) {
-  console.log("Returned rows = " + results.rows.length);
-  // this will be true since it was a select statement and so rowsAffected was 0
-  if (!results.rowsAffected) {
-    console.log('No rows affected!');
-    return false;
+  if (results.rows.length>0) {
+    var name = result.rows.item(0).name;
+    var data = result.rows.item(0).pass;
+    var name = document.getElementById('name');
+    var pass = document.getElementById('pass');
+    name.value = name;
+    pass.value = data;
+    
   }
   // for an insert statement, this property will return the ID of the last inserted row
   console.log("Last inserted row ID = " + results.insertId);
@@ -81,12 +85,7 @@
         console.log("Error processing SQL: "+err.code);
     }
 
-    // Transaction success callback
-    //
-    function successCB() {
-        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
-        db.transaction(queryDB, errorCB);
-    }
+
 
     function save(){
         var name = document.getElementById('name');
@@ -95,7 +94,7 @@
         var pass_text = pass.value;
         var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
         db.transaction(function saveDB(tx,name,pass){
-            tx.executeSql('INSERT INTO USER (name, pass) VALUES ('+name+', '+pass+')');
+            tx.executeSql('INSERT INTO USER (name, pass) VALUES ("'+name+'", "'+pass+'")');
             }, errorCB);
         console.log(name_text,pass_text);
         
