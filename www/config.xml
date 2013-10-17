@@ -26,12 +26,12 @@
         xmlns:rim="http://www.blackberry.com/ns/widgets"
 	version="1.0.0.0">
 
-  <name>example</name>
+  <name>focus test</name>
 
-  <author>Your Name Here</author>
+  <author>patryk</author>
 
   <description>
-       A sample Apache Cordova application that responds to the deviceready event.
+       application for focusing test.
   </description>
 
   <license href="http://opensource.org/licenses/alphabetical">
