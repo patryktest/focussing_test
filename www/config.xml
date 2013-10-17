@@ -24,7 +24,7 @@
 
 <widget xmlns="http://www.w3.org/ns/widgets"
         xmlns:rim="http://www.blackberry.com/ns/widgets"
-	version="1.0.0.0">
+	version="1.0.0.1">
 
   <name>focus test</name>
 
@@ -37,6 +37,7 @@
   <license href="http://opensource.org/licenses/alphabetical">
   </license>
 
+<gap:platform name="blackberry" />
   <!-- Cordova API -->
   <feature id="blackberry.system" required="true" version="1.0.0.0" />
   <feature id="org.apache.cordova" required="true" version="1.0.0" />
