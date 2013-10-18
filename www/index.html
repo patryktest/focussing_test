@@ -22,7 +22,7 @@
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
+
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Hello World</title>
     </head>
@@ -37,77 +37,47 @@
             <input id="date" type="text" value="date"/>
             <input id="pass" type="password" value="type"/>
             <button onclick="save();">next</button>
-            
-            
+
+
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script type="text/javascript">
-             document.addEventListener("deviceready", onDeviceReady, false);
-             
-
-    // Populate the database 
-    //
-    function populateDB(tx) {
-        //tx.executeSql('DROP TABLE IF EXISTS DEMO');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS USER (name, pass)');
-        tx.executeSql('SELECT * FROM USER', [], querySuccess);
-        //tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
-        //tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
-    }
-
-    // Query the database
-    //
-    function queryDB(tx) {
-        tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
-    }
+                document.addEventListener("deviceready", onDeviceReady, false);
+                $(function(){
+                    ls = new LocalStorage();
+                   
+                    $('#name').val(ls.name);
+                    $('#pass').val(ls.pass);
+                })
     
-
-    // Query the success callback
-    //
-    function querySuccess(tx, results) {
-  if (results.rows.length>0) {
-    var name = result.rows.item(0).name;
-    var data = result.rows.item(0).pass;
-    var name = document.getElementById('name');
-    var pass = document.getElementById('pass');
-    name.value = name;
-    pass.value = data;
-    
-  }
-  // for an insert statement, this property will return the ID of the last inserted row
-  console.log("Last inserted row ID = " + results.insertId);
-    }
-
-    // Transaction error callback
-    //
-    function errorCB(err) {
-        console.log("Error processing SQL: "+err.code);
-    }
-
-
-
-    function save(){
-        var name = document.getElementById('name');
-        var pass = document.getElementById('pass');
-        var name_text = name.value;
-        var pass_text = pass.value;
-        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
-        db.transaction(function saveDB(tx,name,pass){
-            tx.executeSql('INSERT INTO USER (name, pass) VALUES ("'+name+'", "'+pass+'")');
-            }, errorCB);
-        console.log(name_text,pass_text);
-        
-    }
-    // Cordova is ready
-    //
-    function onDeviceReady() {
-        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
-        db.transaction(populateDB, errorCB);
-    }
+                function onDeviceReady() {
+                    
+                }
+                function save(){
+                    ls.save($('#name').val(),$('#pass').val());
+                }
+                function LocalStorage(){
+                    this.name = '';
+                    this.pass = '';
+                    this.save = save;
+                    this.get = get;
+                    this.get();
+                    
+                    function save(name,pass){
+                        window.localStorage.setItem('name',name);
+                        window.localStorage.setItem('pass',pass);
+                    }
+                    function get(){
+                        this.name = window.localStorage.getItem('name') || '';
+                        this.pass = window.localStorage.getItem('pass') || '';
+                    }
+                    
+                }
 
 
-            //app.initialize();
+                //app.initialize();
         </script>
     </body>
 </html>
