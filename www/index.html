@@ -56,7 +56,9 @@
                     
                 }
                 function save(){
+                    
                     ls.save($('#name').val(),$('#pass').val());
+                    console.log('save to local storage',ls);
                 }
                 function LocalStorage(){
                     this.name = '';
