@@ -42,18 +42,21 @@
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript">
                 document.addEventListener("deviceready", onDeviceReady, false);
                 $(function(){
+                    init();
+                })
+                function init(){
                     ls = new LocalStorage();
                    
                     $('#name').val(ls.name);
                     $('#pass').val(ls.pass);
-                })
+                }
     
                 function onDeviceReady() {
-                    
+                    init();
                 }
                 function save(){
                     
