@@ -37,6 +37,12 @@
             <input id="date" type="text" value="date"/>
             <input id="pass" type="password" value="type"/>
             <button onclick="save();">next</button>
+            <ul >
+                <li x-blackberry-focusable="true" focusable="true" tabindex="1">test</li>
+                <li x-blackberry-focusable="true" focusable="true" tabindex="4">test</li>
+                <li x-blackberry-focusable="true" focusable="true" tabindex="2">test</li>
+                <li x-blackberry-focusable="true" focusable="true" tabindex="3">test</li>
+            </ul>
 
 
         </div>
@@ -63,23 +69,7 @@
                     ls.save($('#name').val(),$('#pass').val());
                     console.log('save to local storage',ls);
                 }
-                function LocalStorage(){
-                    this.name = '';
-                    this.pass = '';
-                    this.save = save;
-                    this.get = get;
-                    this.get();
-                    
-                    function save(name,pass){
-                        window.localStorage.setItem('name',name);
-                        window.localStorage.setItem('pass',pass);
-                    }
-                    function get(){
-                        this.name = window.localStorage.getItem('name') || '';
-                        this.pass = window.localStorage.getItem('pass') || '';
-                    }
-                    
-                }
+                
 
 
                 //app.initialize();

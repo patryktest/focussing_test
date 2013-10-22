@@ -113,3 +113,12 @@ h1 {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
 }
+ul li {
+    list-style: none;
+    background: white;
+    padding: 10px;
+    margin: 2px;
+}
+ul li:focus,ul li:hover {
+    background: lightblue;
+}
